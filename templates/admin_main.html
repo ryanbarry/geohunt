@@ -1,0 +1,33 @@
+{% extends "admin_base.html" %}
+
+{% block title %}
+	Main
+{% endblock %}
+
+{% block flash %}
+{% if flash %}
+	{% for msg in flash %}
+	<div class="flash">{{ msg }}</div>
+	{% endfor %}
+{% endif %}
+{% endblock %}
+
+{% block content %}	
+	<h2>Games</h2>
+	<p>Click on a game's ID to go to its page where you can view checkin points and registered players and start/end the game.</p>
+	<table class="sample">
+		<thead><tr><th>Game ID</th><th>Is On</th><th># of checkin points</th><th># of players</th></tr></thead>
+		<tbody>
+	{% for game in games %}
+		<tr>
+			<td><a href="/admin/game/{{game.game_id}}">{{game.game_id}}</td>
+			<td>{% if game.is_on %}Yes{% else %}No{% endif %}</td>
+			<td>{{points.filter('game',game).count()}}</td>
+			<td>{{profiles.filter('game',game).count()}}</td>
+		</tr>
+	{% else %}
+		<tr><td colspan="3">No games found. <a href="admin/newgame">Create one</a></td></tr>
+	{% endfor %}
+		</tbody>
+	</table>
+{% endblock %}

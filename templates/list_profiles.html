@@ -1,0 +1,49 @@
+{% extends "main_base.html" %}
+
+{% block title %}
+	Registered Users
+{% endblock %}
+
+{% block flash %}
+{% if flash %}
+<div id="flash">{% for msg in flash %}{{ msg }}{% endfor %}</div>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+	<h2 class="game_status">
+		{% if game_is_on %}Game currently in progress!{% else %}Game currently not in progress.{% endif %}
+	</h2>
+<!--	
+	<h2>Register a new player in current game:</h2>
+	<form action="" method="post" accept-charset="utf-8">
+		{% for error in form.name.errors %}
+			<span class="error">{{ error }}</span>
+		{% endfor %}
+		<label for="name">{{ form.name.label }}</label> {{ form.name|safe }}
+		
+		{% for error in form.reg_id.errors %}
+			<span class="error">{{ error }}</span>
+		{% endfor %}
+		<label for="reg_id">{{ form.reg_id.label }}</label> {{ form.reg_id|safe }}
+		
+		{% for error in form.phone_type.errors %}
+			<span class="error">{{ error }}</span>
+		{% endfor %}
+		<label for="phone_type">{{ form.phone_type.label }}</label> {{ form.phone_type|safe }}
+		
+		<input type="submit" value="Register" />
+	</form>
+-->	
+	<h2>Players in current game</h2>
+	<table class="sample">
+		<thead><tr><th>Name</th><th>Score</th><th>Test Push</th></tr></thead>
+		<tbody>
+	{% for profile in profiles %}
+		<tr><td>{{profile.name}}</td><td>{{profile.score}}</td><td><a href="/test_push?token={{profile.token}}&amp;msgtype=0">GAMEON</a> | <a href="/test_push?token={{profile.token}}&amp;msgtype=1">GAMEOVER</a> | <a href="/test_push?token={{profile.token}}&amp;msgtype=2">REPORT</a></td></tr>
+	{% else %}
+		<tr><td colspan="3">No users registered in current game</td></tr>
+	{% endfor %}
+		</tbody>
+	</table>
+{% endblock %}

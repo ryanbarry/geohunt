@@ -1,0 +1,56 @@
+<html>
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+	<title>Geohunt - {% block title %}{% endblock %}</title>
+	<style type="text/css">
+	table.sample {
+		border-width: 1px;
+		border-spacing: ;
+		border-style: hidden;
+		border-color: gray;
+		border-collapse: separate;
+		background-color: rgb(204, 204, 204);
+	}
+	table.sample th {
+		border-width: 1px;
+		padding: 5px;
+		border-style: none;
+		border-color: gray;
+		background-color: white;
+		-moz-border-radius: ;
+	}
+	table.sample td {
+		border-width: 1px;
+		padding: 5px;
+		border-style: none;
+		border-color: gray;
+		background-color: white;
+		-moz-border-radius: ;
+	}
+	div#flash {
+		text-align:center;
+		margin:10px;
+		padding:5px;
+		border:1px solid #ACA;
+		background-color:#EFA;
+		font-family:Sans-Serif;
+		color:#777;
+		text-shadow:#CCC 1px 1px 0;
+	}
+	span.error {
+		color:#A00;
+	}
+	h2.game_status {
+		color:#56A;
+	}
+	</style>
+</head>
+<body>
+	<h1>Welcome to Geohunt!</h1>
+	{% block flash %}
+	{% endblock %}
+	
+	{% block content %}
+	{% endblock %}
+</body>
+</html>

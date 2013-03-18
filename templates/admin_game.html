@@ -1,0 +1,83 @@
+{% extends "admin_base.html" %}
+
+{% block title %}
+	Game
+{% endblock %}
+
+{% block flash %}
+{% if flash %}
+	{% for msg in flash %}
+	<div class="flash">{{ msg }}</div>
+	{% endfor %}
+{% endif %}
+{% endblock %}
+
+{% block content %}
+	<h2>Game</h2>
+	<p>
+		{% if game.is_on %}
+		[Game is On] | <a href="/admin/game/{{game.game_id}}/stop">End Game</a>
+		{% else %}
+		<a href="/admin/game/{{game.game_id}}/start">Start Game</a> | [Game is not started]
+		{% endif %}
+	</p>
+	
+	<h2>Checkin Points</h2>
+	
+	<table class="sample">
+		<thead><tr><th>ID</th><th>Hint</th><th>Hint Distance</th><th>Latitude</th><th>Longitude</th></tr></thead>
+		<tbody>
+	{% for point in points %}
+			<tr><td>{{point.cid}}</td><td>{{point.hint}}</td><td>{{point.hint_dist}}</td><td>{{point.latitude}}</td><td>{{point.longitude}}</td></tr>
+	{% else %}
+			<tr><td colspan="5">No checkin points created yet. Add one below!</td></tr>
+	{% endfor %}
+		</tbody>
+	</table>
+	
+	<h2>Add New Checkin Point</h2>
+	<p>Fields should be self explanatory; hint distance is how far player must be from the point before the server will give the hint, and is specified as degrees, which are roughly 111km at the equator, so the default value of 0.00020 is roughly 22 meters at the equator.</p>
+	<form action="" method="post" accept-charset="utf-8">
+		{% for error in form.latitude.errors %}
+			<span class="error">{{ error }}</span>
+		{% endfor %}
+		<label for="latitude">{{ form.latitude.label }}</label> {{ form.latitude|safe }}
+		
+		{% for error in form.longitude.errors %}
+			<span class="error">{{ error }}</span>
+		{% endfor %}
+		<label for="longitude">{{ form.longitude.label }}</label> {{ form.longitude|safe }}
+		
+		{% for error in form.hint.errors %}
+			<span class="error">{{ error }}</span>
+		{% endfor %}
+		<label for="hint">{{ form.hint.label }}</label> {{ form.hint|safe }}
+		
+		{% for error in form.hint_dist.errors %}
+			<span class="error">{{ error }}</span>
+		{% endfor %}
+		<label for="hint_dist">{{ form.hint_dist.label }}</label> {{ form.hint_dist|safe }}
+		
+		<input type="submit" value="Create" />
+	</form>
+	
+	<h2>Players</h2>
+	<table class="sample">
+		<thead><tr><th>Name</th><th>Score</th><th>Registration ID</th><th>Token</th></tr></thead>
+		<tbody>
+	{% for profile in profiles %}
+		<tr><td>{{profile.name}}</td><td>{{profile.score}}</td><td>{{profile.registration_id}}</td><td>{{profile.token}}</td></tr>
+	{% else %}
+		<tr><td colspan="3">No players registered in this game.</td></tr>
+	{% endfor %}
+		</tbody>
+	</table>
+	
+	<h2>Test Upload</h2>
+	<form action="/upload" method="post" enctype="multipart/form-data">
+		<label for="cid">CID:</label> <input name="cid" type="text" />
+		<label for="token">Token:</label> <input name="token" type="text" />
+		<input type="file" name="image" accept="image/jpeg" /><br />
+		<input type="submit" value="Upload">
+	</form>
+{% endblock %}
